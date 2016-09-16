@@ -25,12 +25,12 @@ struct Selectors {
 struct TableViewSelectors {
     static let reloadData = #selector(UITableView.reloadData)
     static let endUpdates = #selector(UITableView.endUpdates)
-    static let numberOfSections = #selector(UITableViewDataSource.numberOfSections(`in`:))
+    static let numberOfSections = #selector(UICollectionViewDataSource.numberOfSections)
 }
 
 struct CollectionViewSelectors {
     static let reloadData = #selector(UICollectionView.reloadData)
-    static let numberOfSections = #selector(UICollectionViewDataSource.numberOfSections(`in`:))
+    static let numberOfSections = #selector(UICollectionViewDataSource.numberOfSections)
     static let performBatchUpdates = #selector(UICollectionView.performBatchUpdates(_:completion:))
 }
 

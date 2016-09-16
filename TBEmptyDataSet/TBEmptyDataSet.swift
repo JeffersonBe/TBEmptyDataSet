@@ -220,7 +220,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
 
     // MARK: - UIGestureRecognizer delegate
     override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.view?.isEqual(EmptyDataView) == true {
+        if gestureRecognizer.view?.isEqual(EmptyDataView.self) == true {
             return emptyDataSetTapEnabled()
         }
         return super.gestureRecognizerShouldBegin(gestureRecognizer)
@@ -313,7 +313,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         struct EmptyDataSetSwizzleToken {
             static var onceToken: Int = 0
         }
-        dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
+        DispatchQueue.once(token: String(EmptyDataSetSwizzleToken.onceToken)) {
             let originalSelector = TableViewSelectors.reloadData
             let swizzledSelector = Selectors.tableViewSwizzledReloadData
 
@@ -326,7 +326,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         struct EmptyDataSetSwizzleToken {
             static var onceToken: Int = 0
         }
-        dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
+        DispatchQueue.once(token: String(EmptyDataSetSwizzleToken.onceToken)) {
             let originalSelector = TableViewSelectors.endUpdates
             let swizzledSelector = Selectors.tableViewSwizzledEndUpdates
 
@@ -339,7 +339,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         struct EmptyDataSetSwizzleToken {
             static var onceToken: Int = 0
         }
-        dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
+        DispatchQueue.once(token: String(EmptyDataSetSwizzleToken.onceToken)) {
             let originalSelector = CollectionViewSelectors.reloadData
             let swizzledSelector = Selectors.collectionViewSwizzledReloadData
 
@@ -352,7 +352,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         struct EmptyDataSetSwizzleToken {
             static var onceToken: Int = 0
         }
-        dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
+        DispatchQueue.once(token: String(EmptyDataSetSwizzleToken.onceToken)) {
             let originalSelector = CollectionViewSelectors.performBatchUpdates
             let swizzledSelector = Selectors.collectionViewSwizzledPerformBatchUpdates
 
