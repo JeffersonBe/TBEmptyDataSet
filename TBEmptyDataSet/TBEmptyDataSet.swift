@@ -9,30 +9,30 @@
 import UIKit
 
 public protocol TBEmptyDataSetDataSource: NSObjectProtocol {
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage?
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString?
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString?
+    func imageForEmptyDataSet(_ scrollView: UIScrollView!) -> UIImage?
+    func titleForEmptyDataSet(_ scrollView: UIScrollView!) -> NSAttributedString?
+    func descriptionForEmptyDataSet(_ scrollView: UIScrollView!) -> NSAttributedString?
 
-    func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor?
-    func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor?
+    func imageTintColorForEmptyDataSet(_ scrollView: UIScrollView!) -> UIColor?
+    func backgroundColorForEmptyDataSet(_ scrollView: UIScrollView!) -> UIColor?
 
-    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat
-    func verticalSpacesForEmptyDataSet(scrollView: UIScrollView!) -> [CGFloat]
+    func verticalOffsetForEmptyDataSet(_ scrollView: UIScrollView!) -> CGFloat
+    func verticalSpacesForEmptyDataSet(_ scrollView: UIScrollView!) -> [CGFloat]
 
-    func customViewForEmptyDataSet(scrollView: UIScrollView!) -> UIView?
+    func customViewForEmptyDataSet(_ scrollView: UIScrollView!) -> UIView?
 }
 
 public protocol TBEmptyDataSetDelegate: NSObjectProtocol {
-    func emptyDataSetShouldDisplay(scrollView: UIScrollView!) -> Bool
-    func emptyDataSetTapEnabled(scrollView: UIScrollView!) -> Bool
-    func emptyDataSetScrollEnabled(scrollView: UIScrollView!) -> Bool
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool
+    func emptyDataSetTapEnabled(_ scrollView: UIScrollView!) -> Bool
+    func emptyDataSetScrollEnabled(_ scrollView: UIScrollView!) -> Bool
 
-    func emptyDataSetDidTapView(scrollView: UIScrollView!)
+    func emptyDataSetDidTapView(_ scrollView: UIScrollView!)
 
-    func emptyDataSetWillAppear(scrollView: UIScrollView!)
-    func emptyDataSetDidAppear(scrollView: UIScrollView!)
-    func emptyDataSetWillDisappear(scrollView: UIScrollView!)
-    func emptyDataSetDidDisappear(scrollView: UIScrollView!)
+    func emptyDataSetWillAppear(_ scrollView: UIScrollView!)
+    func emptyDataSetDidAppear(_ scrollView: UIScrollView!)
+    func emptyDataSetWillDisappear(_ scrollView: UIScrollView!)
+    func emptyDataSetDidDisappear(_ scrollView: UIScrollView!)
 }
 
 // MARK: - UIScrollView Extension
@@ -77,17 +77,17 @@ extension UIScrollView: UIGestureRecognizerDelegate {
 
     public var emptyDataViewVisible: Bool {
         if let emptyDataView = objc_getAssociatedObject(self, &AssociatedKeys.emptyDataView) as? EmptyDataView {
-            return !emptyDataView.hidden
+            return !emptyDataView.isHidden
         }
         return false
     }
 
-    private var emptyDataView: EmptyDataView! {
+    fileprivate var emptyDataView: EmptyDataView! {
         var emptyDataView = objc_getAssociatedObject(self, &AssociatedKeys.emptyDataView) as? EmptyDataView
         if emptyDataView == nil {
             emptyDataView = EmptyDataView(frame: frame)
-            emptyDataView!.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-            emptyDataView!.hidden = true
+            emptyDataView!.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            emptyDataView!.isHidden = true
 
             emptyDataView!.tapGesture = UITapGestureRecognizer(target: self, action: #selector(UIScrollView.didTapEmptyDataView(_:)))
             emptyDataView!.tapGesture.delegate = self
@@ -98,53 +98,53 @@ extension UIScrollView: UIGestureRecognizerDelegate {
     }
 
     // MARK: - Setters
-    private func setEmptyDataView(emptyDataView: EmptyDataView?) {
+    fileprivate func setEmptyDataView(_ emptyDataView: EmptyDataView?) {
         objc_setAssociatedObject(self, &AssociatedKeys.emptyDataView, emptyDataView, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     // MARK: - DataSource getters
-    private func emptyDataSetImage() -> UIImage? {
+    fileprivate func emptyDataSetImage() -> UIImage? {
         return emptyDataSetDataSource?.imageForEmptyDataSet(self)
     }
 
-    private func emptyDataSetTitle() -> NSAttributedString? {
+    fileprivate func emptyDataSetTitle() -> NSAttributedString? {
         return emptyDataSetDataSource?.titleForEmptyDataSet(self)
     }
 
-    private func emptyDataSetDescription() -> NSAttributedString? {
+    fileprivate func emptyDataSetDescription() -> NSAttributedString? {
         return emptyDataSetDataSource?.descriptionForEmptyDataSet(self)
     }
 
-    private func emptyDataSetImageTintColor() -> UIColor? {
+    fileprivate func emptyDataSetImageTintColor() -> UIColor? {
         return emptyDataSetDataSource?.imageTintColorForEmptyDataSet(self)
     }
 
-    private func emptyDataSetBackgroundColor() -> UIColor? {
+    fileprivate func emptyDataSetBackgroundColor() -> UIColor? {
         return emptyDataSetDataSource?.backgroundColorForEmptyDataSet(self)
     }
 
-    private func emptyDataSetVerticalOffset() -> CGFloat {
+    fileprivate func emptyDataSetVerticalOffset() -> CGFloat {
         return emptyDataSetDataSource?.verticalOffsetForEmptyDataSet(self) ?? DefaultValues.verticalOffset
     }
 
-    private func emptyDataSetVerticalSpaces() -> [CGFloat] {
+    fileprivate func emptyDataSetVerticalSpaces() -> [CGFloat] {
         return emptyDataSetDataSource?.verticalSpacesForEmptyDataSet(self) ?? [DefaultValues.verticalSpace, DefaultValues.verticalSpace]
     }
 
-    private func emptyDataSetCustomView() -> UIView? {
+    fileprivate func emptyDataSetCustomView() -> UIView? {
         return emptyDataSetDataSource?.customViewForEmptyDataSet(self)
     }
 
     // MARK: - Delegate getters
-    private func emptyDataSetShouldDisplay() -> Bool {
+    fileprivate func emptyDataSetShouldDisplay() -> Bool {
         return emptyDataSetDelegate?.emptyDataSetShouldDisplay(self) ?? true
     }
 
-    private func emptyDataSetTapEnabled() -> Bool {
+    fileprivate func emptyDataSetTapEnabled() -> Bool {
         return emptyDataSetDelegate?.emptyDataSetTapEnabled(self) ?? true
     }
 
-    private func emptyDataSetScrollEnabled() -> Bool {
+    fileprivate func emptyDataSetScrollEnabled() -> Bool {
         return emptyDataSetDelegate?.emptyDataSetScrollEnabled(self) ?? false
     }
 
@@ -154,40 +154,40 @@ extension UIScrollView: UIGestureRecognizerDelegate {
     }
 
     // MARK: - View events
-    func didTapEmptyDataView(sender: AnyObject) {
+    func didTapEmptyDataView(_ sender: AnyObject) {
         emptyDataSetDelegate?.emptyDataSetDidTapView(self)
     }
 
-    private func emptyDataSetWillAppear() {
+    fileprivate func emptyDataSetWillAppear() {
         emptyDataSetDelegate?.emptyDataSetWillAppear(self)
     }
 
-    private func emptyDataSetDidAppear() {
+    fileprivate func emptyDataSetDidAppear() {
         emptyDataSetDelegate?.emptyDataSetDidAppear(self)
     }
 
-    private func emptyDataSetWillDisappear() {
+    fileprivate func emptyDataSetWillDisappear() {
         emptyDataSetDelegate?.emptyDataSetWillDisappear(self)
     }
 
-    private func emptyDataSetDidDisappear() {
+    fileprivate func emptyDataSetDidDisappear() {
         emptyDataSetDelegate?.emptyDataSetDidDisappear(self)
     }
 
     // MARK: - Helper
-    private func emptyDataSetAvailable() -> Bool {
+    fileprivate func emptyDataSetAvailable() -> Bool {
         if let _ = emptyDataSetDataSource {
-            return isKindOfClass(UITableView.self) || isKindOfClass(UICollectionView.self) || isKindOfClass(UIScrollView.self)
+            return isKind(of: UITableView.self) || isKind(of: UICollectionView.self) || isKind(of: UIScrollView.self)
         }
         return false
     }
 
-    private func cellsCount() -> Int {
+    fileprivate func cellsCount() -> Int {
         var count = 0
         if let tableView = self as? UITableView {
             if let dataSource = tableView.dataSource {
-                if dataSource.respondsToSelector(TableViewSelectors.numberOfSections) {
-                    let sections = dataSource.numberOfSectionsInTableView!(tableView)
+                if dataSource.responds(to: TableViewSelectors.numberOfSections) {
+                    let sections = dataSource.numberOfSections!(in: tableView)
                     for section in 0..<sections {
                         count += dataSource.tableView(tableView, numberOfRowsInSection: section)
                     }
@@ -195,8 +195,8 @@ extension UIScrollView: UIGestureRecognizerDelegate {
             }
         } else if let collectionView = self as? UICollectionView {
             if let dataSource = collectionView.dataSource {
-                if dataSource.respondsToSelector(CollectionViewSelectors.numberOfSections) {
-                    let sections = dataSource.numberOfSectionsInCollectionView!(collectionView)
+                if dataSource.responds(to: CollectionViewSelectors.numberOfSections) {
+                    let sections = dataSource.numberOfSections!(in: collectionView)
                     for section in 0..<sections {
                         count += dataSource.collectionView(collectionView, numberOfItemsInSection: section)
                     }
@@ -207,26 +207,26 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         return count
     }
 
-    private func handlingInvalidEmptyDataSet() {
+    fileprivate func handlingInvalidEmptyDataSet() {
         emptyDataSetWillDisappear()
 
         emptyDataView.resetEmptyDataView()
         emptyDataView.removeFromSuperview()
         setEmptyDataView(nil)
-        scrollEnabled = true
+        isScrollEnabled = true
 
         emptyDataSetDidDisappear()
     }
 
     // MARK: - UIGestureRecognizer delegate
-    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer.view?.isEqual(EmptyDataView) == true {
             return emptyDataSetTapEnabled()
         }
         return super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
 
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer.isEqual(emptyDataView.tapGesture) || otherGestureRecognizer.isEqual(emptyDataView.tapGesture) {
             return true
         }
@@ -236,7 +236,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
 
     // MARK: - Reload
     // swiftlint:disable function_body_length
-    private func reloadEmptyDataSet() {
+    fileprivate func reloadEmptyDataSet() {
         if !emptyDataSetAvailable() {
             return
         }
@@ -252,7 +252,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
 
         if emptyDataView.superview == nil {
             if (self is UITableView || self is UICollectionView) && subviews.count > 1 {
-                insertSubview(emptyDataView, atIndex: 0)
+                insertSubview(emptyDataView, at: 0)
             } else {
                 addSubview(emptyDataView)
             }
@@ -267,10 +267,10 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         } else {
             if let image = emptyDataSetImage() {
                 if let imageTintColor = emptyDataSetImageTintColor() {
-                    emptyDataView!.imageView.image = image.imageWithRenderingMode(.AlwaysTemplate)
+                    emptyDataView!.imageView.image = image.withRenderingMode(.alwaysTemplate)
                     emptyDataView!.imageView.tintColor = imageTintColor
                 } else {
-                    emptyDataView!.imageView.image = image.imageWithRenderingMode(.AlwaysOriginal)
+                    emptyDataView!.imageView.image = image.withRenderingMode(.alwaysOriginal)
                 }
             }
 
@@ -284,10 +284,10 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         }
 
         emptyDataView.backgroundColor = emptyDataSetBackgroundColor()
-        emptyDataView.hidden = false
+        emptyDataView.isHidden = false
         emptyDataView.clipsToBounds = true
-        emptyDataView.tapGesture.enabled = emptyDataSetTapEnabled()
-        scrollEnabled = emptyDataSetScrollEnabled()
+        emptyDataView.tapGesture.isEnabled = emptyDataSetTapEnabled()
+        isScrollEnabled = emptyDataSetScrollEnabled()
 
         emptyDataView.setConstraints()
         emptyDataView.layoutIfNeeded()
@@ -296,7 +296,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
     }
 
     // MARK: - Method swizzling
-    private class func tb_swizzleMethod(originalSelector: Selector, swizzledSelector: Selector) {
+    fileprivate class func tb_swizzleMethod(_ originalSelector: Selector, swizzledSelector: Selector) {
         let originalMethod = class_getInstanceMethod(self, originalSelector)
         let swizzledMethod = class_getInstanceMethod(self, swizzledSelector)
 
@@ -309,9 +309,9 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         }
     }
 
-    private class func tb_swizzleTableViewReloadData() {
+    fileprivate class func tb_swizzleTableViewReloadData() {
         struct EmptyDataSetSwizzleToken {
-            static var onceToken: dispatch_once_t = 0
+            static var onceToken: Int = 0
         }
         dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
             let originalSelector = TableViewSelectors.reloadData
@@ -322,9 +322,9 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         }
     }
 
-    private class func tb_swizzleTableViewEndUpdates() {
+    fileprivate class func tb_swizzleTableViewEndUpdates() {
         struct EmptyDataSetSwizzleToken {
-            static var onceToken: dispatch_once_t = 0
+            static var onceToken: Int = 0
         }
         dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
             let originalSelector = TableViewSelectors.endUpdates
@@ -335,9 +335,9 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         }
     }
 
-    private class func tb_swizzleCollectionViewReloadData() {
+    fileprivate class func tb_swizzleCollectionViewReloadData() {
         struct EmptyDataSetSwizzleToken {
-            static var onceToken: dispatch_once_t = 0
+            static var onceToken: Int = 0
         }
         dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
             let originalSelector = CollectionViewSelectors.reloadData
@@ -348,9 +348,9 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         }
     }
 
-    private class func tb_swizzleCollectionViewPerformBatchUpdates() {
+    fileprivate class func tb_swizzleCollectionViewPerformBatchUpdates() {
         struct EmptyDataSetSwizzleToken {
-            static var onceToken: dispatch_once_t = 0
+            static var onceToken: Int = 0
         }
         dispatch_once(&EmptyDataSetSwizzleToken.onceToken) {
             let originalSelector = CollectionViewSelectors.performBatchUpdates
@@ -376,7 +376,7 @@ extension UIScrollView: UIGestureRecognizerDelegate {
         reloadEmptyDataSet()
     }
 
-    func tb_collectionViewSwizzledPerformBatchUpdates(updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
+    func tb_collectionViewSwizzledPerformBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)?) {
         tb_collectionViewSwizzledPerformBatchUpdates(updates) { [weak self](completed) in
             completion?(completed)
             self?.reloadEmptyDataSet()

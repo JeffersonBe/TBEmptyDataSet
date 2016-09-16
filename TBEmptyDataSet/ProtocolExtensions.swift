@@ -9,69 +9,69 @@
 import UIKit
 
 public extension TBEmptyDataSetDataSource {
-    func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage? {
+    func imageForEmptyDataSet(_ scrollView: UIScrollView!) -> UIImage? {
         return nil
     }
 
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString? {
+    func titleForEmptyDataSet(_ scrollView: UIScrollView!) -> NSAttributedString? {
         return nil
     }
 
-    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString? {
+    func descriptionForEmptyDataSet(_ scrollView: UIScrollView!) -> NSAttributedString? {
         return nil
     }
 
-    func imageTintColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor? {
+    func imageTintColorForEmptyDataSet(_ scrollView: UIScrollView!) -> UIColor? {
         return nil
     }
 
-    func backgroundColorForEmptyDataSet(scrollView: UIScrollView!) -> UIColor? {
+    func backgroundColorForEmptyDataSet(_ scrollView: UIScrollView!) -> UIColor? {
         return nil
     }
 
-    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView!) -> CGFloat {
+    func verticalOffsetForEmptyDataSet(_ scrollView: UIScrollView!) -> CGFloat {
         return DefaultValues.verticalOffset
     }
 
-    func verticalSpacesForEmptyDataSet(scrollView: UIScrollView!) -> [CGFloat] {
+    func verticalSpacesForEmptyDataSet(_ scrollView: UIScrollView!) -> [CGFloat] {
         return [DefaultValues.verticalSpace, DefaultValues.verticalSpace]
     }
 
-    func customViewForEmptyDataSet(scrollView: UIScrollView!) -> UIView? {
+    func customViewForEmptyDataSet(_ scrollView: UIScrollView!) -> UIView? {
         return nil
     }
 }
 
 public extension TBEmptyDataSetDelegate {
-    func emptyDataSetShouldDisplay(scrollView: UIScrollView!) -> Bool {
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
         return true
     }
 
-    func emptyDataSetTapEnabled(scrollView: UIScrollView!) -> Bool {
+    func emptyDataSetTapEnabled(_ scrollView: UIScrollView!) -> Bool {
         return true
     }
 
-    func emptyDataSetScrollEnabled(scrollView: UIScrollView!) -> Bool {
+    func emptyDataSetScrollEnabled(_ scrollView: UIScrollView!) -> Bool {
         return false
     }
 
-    func emptyDataSetDidTapView(scrollView: UIScrollView!) {
+    func emptyDataSetDidTapView(_ scrollView: UIScrollView!) {
 
     }
 
-    func emptyDataSetWillAppear(scrollView: UIScrollView!) {
+    func emptyDataSetWillAppear(_ scrollView: UIScrollView!) {
 
     }
 
-    func emptyDataSetDidAppear(scrollView: UIScrollView!) {
+    func emptyDataSetDidAppear(_ scrollView: UIScrollView!) {
 
     }
 
-    func emptyDataSetWillDisappear(scrollView: UIScrollView!) {
+    func emptyDataSetWillDisappear(_ scrollView: UIScrollView!) {
 
     }
 
-    func emptyDataSetDidDisappear(scrollView: UIScrollView!) {
+    func emptyDataSetDidDisappear(_ scrollView: UIScrollView!) {
 
     }
 }
